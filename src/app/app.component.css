@@ -1,0 +1,604 @@
+/* Container for the logo */
+.logo-container {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999; /* Ensures logo stays on top */
+  display: inline-block;
+  animation: borderAnimation 5s linear infinite; /* Animation for the border */
+}
+
+/* Styling for the logo */
+.company-logo {
+  max-width: 100%;
+  height: auto;
+  width: 250px; /* You can adjust this based on your design */
+  border-radius: 10px;
+}
+
+/* Multi-colored running border animation */
+/* @keyframes borderAnimation {
+  0% {
+    border: 2px solid rgb(228, 125, 65);
+  }
+  25% {
+    border: 2px solid rgb(164, 182, 85);
+  }
+  50% {
+    border: 2px solid rgb(156, 182, 141);
+  }
+  75% {
+    border: 2px solid rgb(110, 60, 44);
+  }
+  100% {
+    border: 2px solid rgb(148, 78, 142);
+  }
+} */
+
+/* Make sure the logo stays at the top-left on various devices */
+@media (max-width: 768px) {
+  .company-logo {
+    width: 120px; /* Adjust logo size on smaller screens */
+    left: 0;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .company-logo {
+    width: 100px; /* Even smaller on mobile */
+    left: 0;
+    margin-left: 0;
+  }
+}
+
+/* Ensure the logo is always in the top-left corner */
+@media (max-width: 1024px) {
+  .logo-container {
+    top: 10px;
+    left:3px;
+  }
+}
+
+.btn-drive {
+  position: fixed;
+  top: 30px;
+  left: 300px;
+  z-index: 9999;
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background: linear-gradient(45deg, #ff5722, #ff9800);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-drive:hover {
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+  transform: scale(1.1);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .btn-drive {
+    top: 50px;
+    left: 0;
+    width: 80px;
+    margin: 2px  ;
+    text-align: center;
+    font-size: 9px;
+    margin-top: 10px;
+  }
+} 
+
+
+
+body {
+  min-block-size: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui;
+  background: lch(30 0 0);
+  margin: 0;
+  background-color: rgb(247, 241, 241);
+}
+
+/* Main Container Styling */
+.stack {
+  display: grid;
+  grid: [stack] / [stack];
+  perspective: px; 
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-in-out;
+  max-width: 100vw;
+  max-height: 100vh;      
+  margin: 0 auto; /* Center the stack horizontally */
+  border: none;
+  animation: rotateStack180 20s infinite ease-in-out;
+}  
+ 
+ 
+
+ /* Exploded view when modal is open */
+.stack.exploded .card {
+  --z-offset: 40vh;  /* Adjust the value to make the effect more pronounced */
+  transform: rotateX(45deg) rotate(45deg) translateZ(var(--z-offset)) translateY(20vh) translateX(20vh);
+}
+
+.stack.exploded .card:nth-child(1) { --z-offset: 65vh; }
+.stack.exploded .card:nth-child(2) { --z-offset: 50vh; }
+.stack.exploded .card:nth-child(3) { --z-offset: 25vh; }
+.stack.exploded .card:nth-child(4) { --z-offset: 0vh; }
+.stack.exploded .card:nth-child(5) { --z-offset: -25vh; }
+
+/* @keyframes rotateStack180 {
+  0% {
+    transform: rotateX(0deg);
+  }
+  100% {
+    transform: rotateX(180deg);
+  }
+} */
+.stack::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  
+  transition: background 2s ease;
+  pointer-events: none;
+  background:rgb(252, 249, 249);
+}
+
+.stack:hover::after {
+  background: rgb(248, 245, 245);
+  opacity: -10;
+}
+
+.stack:hover::before,
+.stack:active::before {
+  background: rgb(252, 250, 250);
+  border: none;
+  
+   
+}
+
+.stack:hover .card,
+.stack:active .card {
+  --bg-opacity: 5%;
+  transition-duration: 2s;
+  transition-timing-function: var(--easeInOutCirc);
+  transform: rotateX(45deg) rotate(45deg) translateZ(var(--z-offset)) translateY(20vh) translateX(20vh);
+}
+
+.stack:hover .card:nth-child(1) { --z-offset: 75vh; }
+.stack:hover .card:nth-child(2) { --z-offset: 50vh; }
+.stack:hover .card:nth-child(3) { --z-offset: 25vh; }
+.stack:hover .card:nth-child(4) { --z-offset: 0vh; }
+.stack:hover .card:nth-child(5) { --z-offset: -25vh; }
+
+/* Shared Card Styles */
+.card {
+  grid-area: stack;
+  --z-offset: 0;
+  --easeInOutCirc: cubic-bezier(0.85, 0, 0.15, 1);
+  --bg-opacity: 0%;
+  inline-size: 70vmin;
+  block-size: 40vmin;
+  box-sizing: border-box;
+  background: lch(100 0 0 / 5%);
+  position: relative;
+  transition: transform 4s ease;
+  
+
+}
+
+.card::after {
+  content: attr(data-label);
+  position: absolute;
+  left: -15%;
+  top: 110%;
+  font-size: 1.25rem;
+  text-shadow: 0 1px 3px lch(0 0 0 / 75%);
+  white-space: nowrap;
+  padding: 1ch 2ch;
+  border-radius: 4ch;
+  opacity: 0;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transform: rotate(-45deg) rotateY(45deg) translateX(20px);
+  background: lch(0 0 0 / 70%);
+}
+
+.card:hover::after {
+  opacity: 100;
+  /* transform: rotate(0) translateX(0); */
+}
+
+/* Specific Card Styles */
+.content {
+  z-index: 10;
+  padding: 5vmin;
+  font-size: max(2.5vmin, 0.9rem);
+  line-height: 1.5;
+  background: lch(100 0 0);
+  border: 1px solid rgb(24, 21, 22);
+  color: rgb(248, 245, 245);
+  padding: 0; /* Remove padding to prevent interference */
+  margin: 0; /* Reset margins */
+  background: none; /* Ensure no background interferes */
+}
+
+
+
+.rotating-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; 
+  /* // Ensures the image covers the container fully  */
+}
+/* .content img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  
+  display: block;
+} */
+
+
+.padding {
+  z-index: 4;
+  background: transparent;
+}
+
+.border {
+  z-index: 3;
+  background: transparent;
+  border: 5px solid hotpink;
+}
+
+.background {
+  z-index: 2;
+  background: white;
+}
+
+.box-shadow {
+  z-index: 1;
+  background: transparent;  
+  box-shadow: 0 2.8px 2.2px rgba(0, 0, 0, 0.02), 0 100px 80px rgba(0, 0, 0, 0.07);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 540px) {
+  .stack{
+    border: none;
+  }
+  .card {
+    inline-size: 60vw;
+    block-size: 60vw;
+    block-size: auto;
+  }
+
+  .card::after {
+    left: -20%;
+    top: 70%;
+  }
+   
+    .card img {
+        width: 100%;
+    }
+  }
+  
+ 
+
+@media (hover:hover) {
+  #mobile-prompt {
+    display: none;
+    border: none;
+  }
+}
+
+@media (hover:none) {
+  #desktop-prompt {
+    border: none;
+  }
+}
+
+/* Custom Styles for Drag-to-Rotate */
+.stack {
+  cursor: grab;
+}
+
+.stack.grabbing {
+  cursor: grabbing;
+}
+
+/* Add content styles here */
+.content::after {
+  content: "Cover Glass:";
+  background: transparent;
+  z-index: 4;
+  transition-delay: .1s;
+  
+  background: lch(0 0 0 / 70%);
+  padding: 1ch 2ch;
+  font-size: 1.25rem;
+  white-space: nowrap;
+  z-index: 10; /* Ensure it's on top */
+}
+
+/* Padding Box */
+.padding {
+  background: transparent;
+  z-index: 4;
+  transition-delay: .1s;
+}
+
+.padding::after { 
+  color: white;
+  content: "Touch Sensor:"; 
+}
+
+/* Border Box */
+.border {
+  z-index: 3;
+  background: transparent;
+  transition-delay: .2s;
+ 
+}
+
+.border::after { 
+  color: white;
+  content: "Optical Bonding:"; 
+}
+
+/* Background Box */
+.background {
+  z-index: 2;
+  transition: 
+    background-color 4s ease .3s,
+    transform 4s ease .3s; 
+}
+
+.background::after { 
+  color: white;
+  content: "Display Panel:"; 
+}
+
+/* Box Shadow Box */
+.box-shadow {
+  z-index: 1;
+  background: transparent;
+  transition: 
+    box-shadow 4s ease .4s,
+    transform 4s ease .4s; 
+  
+  box-shadow:
+    0 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    0 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    0 12.5px 10px rgba(0, 0, 0, 0.035),
+    0 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    0 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    0 100px 80px rgba(0, 0, 0, 0.07);
+  
+  &::after { content: "Backlight Unit:";
+  color: white; }
+}
+
+
+/* ******************************** */
+   
+
+/* Tooltip Icon */
+.tooltip-icon {
+  position: absolute;
+  top: -5px;
+  right: 7px;
+  /* background-color: white; */
+  /* border-radius: 50%; */
+  padding: 5px;
+  /* box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.2); */
+  cursor: pointer;
+  visibility: hidden; /* Hidden by default */
+  opacity: 0; /* Fully transparent */
+  transition: visibility 0s, opacity 0.3s ease-in-out;
+  z-index: 1;
+}
+
+/* Hover Effect */
+.card:hover .tooltip-icon {
+  visibility: visible; /* Show on hover */
+  opacity: 1; /* Fully visible */
+}
+
+/* Ping Animation Effect */
+.ping-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  background-color: rgba(0, 132, 255, 0.5);
+  border-radius: 50%;
+  animation: ping 1s infinite;
+  z-index: 1; /* Behind the tooltip icon */
+}
+
+/* Tooltip Icon Styles */
+.tooltip-icon i {
+  font-size: 16px;
+  color: #077ff8;
+  z-index: 1;
+}
+
+/* Ping Animation */
+@keyframes ping {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  75% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0;
+  }
+}
+
+/* Mobile Friendly Adjustments */
+@media (max-width: 576px) {
+  .tooltip-wrapper .tooltip-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .ping-circle {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+
+
+
+
+
+/* Modal container */
+.custom-modal {
+  position: fixed;
+  top: 0;
+  left: 80;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1050;
+  overflow-y: auto;
+}
+
+/* Modal content */
+.modal-content {
+  background: linear-gradient(135deg, #ffffff 30%, #f8f9fa 90%);
+  padding: 20px;
+  border-radius: 15px;
+  border: none;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  position: relative;
+  animation: slide-up 0.4s ease-out;
+}
+
+/* Close button */
+.close {
+  position: absolute;
+  top: -8px;
+  right: 7px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s;
+  opacity: 10;
+}
+
+.close:hover {
+  color: #ff6f61;
+}
+
+/* Modal header styling */
+.modal-header {
+  background: linear-gradient(to right, #bee98a, #d36f6f);
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  justify-content: center; /* Center-align content horizontally */
+  align-items: center;    /* Center-align content vertically */
+  text-align: center;     /* Ensure text alignment */
+}
+
+.modal-title {
+  font-family: 'Serif',' Roboto Slab'; /* Use Lato for the title "Roboto Slab" (Serif)  */
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Modal description styling */
+.modal-description {
+    font-family: 'Lato', sans-serif; /* Use Lato for the title */
+  color: #555;
+  font-size: 16px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+  
+}
+
+/* Carousel styling */
+.carousel-inner img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-in-out;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .custom-modal {
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .modal-title {
+    font-size: 20px;
+  }
+
+  .modal-description {
+    font-size: 14px;
+  }
+}
+/* Responsive styles */
+@media (max-width: 1280px) {
+  .custom-modal {
+    width: 100%;
+    top: 0;
+    left: 0;
+  }
+}

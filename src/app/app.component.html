@@ -1,0 +1,96 @@
+<div class="header">
+  <a href="https://www.keetronics.com/" class="logo-container">
+    <img src="https://i.ibb.co/dJ29C4J/Keetronics-Logo-PNG.png" alt="Keetronics Logo" class="company-logo">
+  </a>
+  <button class="btn-drive" onclick="window.open('https://drive.google.com/drive/folders/1Jxue4gwyJ9FwgDPjAAfCJ-azQx_ufB-z?usp=sharing', '_blank')">
+    Launch Presentation
+    <!-- View Presentation Open Google Drive -->
+  </button>
+</div>
+
+
+
+<div class="stack" [class.exploded]="isModalOpen" style="border: none;background: none; background-image: none; box-shadow: none; border-color: none; ">
+  <!-- First div with modal -->
+  <div class="content card">
+    <div class="tooltip-icon" (click)="openModal(1)">
+      <i class="fa-solid fa-circle-info"></i>
+      <div class="ping-circle"></div> <!-- Ping effect -->
+    </div>
+    <img src="../assets/images/firstLayer1.png" alt="Rotating Image" style="width: 100%; height: 100%;   object-fit: cover; " class="rotating-image">
+  </div>
+
+  <!-- Second div with modal -->
+  <div class="padding card">
+    <div class="tooltip-icon" (click)="openModal(2)">
+      <i class="fa-solid fa-circle-info"></i>
+      <div class="ping-circle"></div> 
+    </div>
+    <img src="../assets/images/secondlayer4.png" alt="Rotating Image" class="rotating-image">
+  </div>
+
+  <!-- Third div with modal -->
+  <div class="border card">
+    <div class="tooltip-icon" (click)="openModal(3)">
+      <i class="fa-solid fa-circle-info"></i>
+      <div class="ping-circle"></div> 
+    </div>
+    <img src="../assets/images/ob08.png" alt="Rotating Image" class="rotating-image">
+  </div>
+
+  <!-- Fourth div with modal -->
+  <div class="background card">
+    <div class="tooltip-icon" (click)="openModal(4)">
+      <i class="fa-solid fa-circle-info"></i>
+      <div class="ping-circle"></div> 
+    </div>
+    <img src="../assets/images/thirdlayer.png" alt="Rotating Image" class="rotating-image">
+  </div>
+
+  <!-- Fifth div with modal -->
+  <div class="box-shadow card">
+    <div class="tooltip-icon" (click)="openModal(5)">
+      <i class="fa-solid fa-circle-info"></i>
+      <div class="ping-circle"></div> 
+    </div>
+    <img src="../assets/images/ob07.png" alt="Rotating Image" class="rotating-image">
+  </div>
+</div>
+
+<!-- Modal Structure -->
+<div *ngIf="isModalOpen" class="custom-modal">
+  <div class="modal-content animate-fade-in">
+    <span class="close" (click)="closeModal()">&times;</span>
+    
+    <div class="modal-body">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h2 class="modal-title"  >{{ modalTitle }}</h2>
+      </div>
+      <!-- Modal Description -->
+      <div class="modal-description">
+        <p>{{ modalDescription }}</p>
+      </div>
+      <!-- Carousel -->
+      <div class="modal-carousel">
+        <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+          <div class="carousel-inner">
+            <div *ngFor="let img of modalImages; let i = index" class="carousel-item" [ngClass]="{'active': i === 0}">
+              <img [src]="img" class="d-block w-100 rounded" alt="Modal Image">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+ 
